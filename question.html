@@ -118,7 +118,7 @@
 
         .q-box {
             width: 42vw;
-            height: 52vh;
+            min-height: 52vh;
             background-color: #E9E7A2;
             border-radius: 20px;
             padding: 4vw;
@@ -272,8 +272,13 @@
         const addBtns = document.querySelectorAll('.add-btn');
         const submitBtn = document.querySelector('.submit-btn');
         const nextBtn = document.querySelector('.next-btn');
+     
+        let isSubmitted = false;
         
         inputField.addEventListener('input', function(e) {
+            // 값을 수정하면 다시 입력완료를 눌러야 하므로 상태 초기화
+            isSubmitted = false; 
+            
             let value = e.target.value.replace(/[^0-9]/g, '');
             
             if (value.length > 0) {
@@ -287,6 +292,9 @@
 
         addBtns.forEach(function(btn) {
             btn.addEventListener('click', function() {
+                // 버튼으로 금액을 추가해도 다시 입력완료를 눌러야 하므로 상태 초기화
+                isSubmitted = false;
+                
                 let currentValue = inputField.value.replace(/[^0-9]/g, '');
                 let currentNumber = currentValue === '' ? 0 : parseInt(currentValue, 10);
                 
@@ -309,16 +317,25 @@
             if (inputField.value === '') {
                 alert('정확한 성향 분석을 위해 시드머니 규모를 먼저 입력해 주세요! 💸');
             } else {
+                
+                isSubmitted = true;
                 alert(inputField.value + ' 입력이 완료되었습니다!');
             }
         });
 
-
+       
         nextBtn.addEventListener('click', function(e) {
             let currentValue = inputField.value.replace(/[^0-9]/g, '');
+            
+            // 1. 값이 아예 없거나 0원인 경우
             if (currentValue === '' || parseInt(currentValue, 10) === 0) {
-                e.preventDefault(); // 페이지 넘어가는 것을 강제로 막습니다.
-                alert('정확한 투자 성향 분석을 위해 시드머니 규모를 먼저 입력해 주세요!');
+                e.preventDefault(); 
+                alert('정확한 투자 성향 분석을 위해 시드머니 규모를 입력해 주세요!');
+            } 
+            // 2. 값은 있지만 입력완료 버튼을 안 누른 경우
+            else if (!isSubmitted) {
+                e.preventDefault(); 
+                alert('입력완료 버튼을 먼저 눌러주세요!');
             }
         });
     </script>
