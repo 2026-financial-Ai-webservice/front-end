@@ -222,7 +222,7 @@
 
     <div class="center-panel">
         <div class="q-wrapper">
-            <div class="arrow">&lt;</div>
+            <a href="index.html" class="arrow" style="text-decoration: none;">&lt;</a>
             
             <div class="q-box">
                 <div class="q-header">
@@ -241,7 +241,7 @@
                 </div>
             </div>
             
-            <div class="arrow">&gt;</div>
+            <a href="question2.html" class="arrow" style="text-decoration: none;">&gt;</a>
         </div>
         
         <div class="page-indicator">1/5</div>
@@ -253,13 +253,13 @@
         const inputField = document.querySelector('.input-area input');
         
         inputField.addEventListener('input', function(e) {
-            // 사용자가 입력한 값에서 '원' 글자를 찾아 임시로 제거합니다.
+       
             let value = e.target.value.replace(/원/g, '');
             
-            // 빈칸이 아니라면, 입력한 글자 맨 뒤에 '원'을 찰싹 붙여줍니다.
+          
             if (value.length > 0) {
                 e.target.value = value + '원';
-                // 타이핑할 때 커서가 '원' 밖으로 밀려나지 않도록 커서 위치를 '원' 바로 앞으로 당겨옵니다.
+                
                 e.target.setSelectionRange(value.length, value.length);
             }
         });
