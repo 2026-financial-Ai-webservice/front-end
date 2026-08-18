@@ -43,9 +43,8 @@
             border: 24px solid #E9E7A2;
             display: flex;
             flex-direction: column;
-            justify-content: space-between;
-            align-items: center;
-            padding: 90px 0 70px 0;
+            /* space-between을 제거하고 중앙 정렬 기반으로 변경하여 margin이 먹히도록 수정 */
+            align-items: center; 
         }
 
         .main-container::before {
@@ -68,8 +67,8 @@
             align-items: center;
             border-radius: 4px;
             z-index: 1;
-            /* 여백을 40px에서 80px로 두 배 더 늘렸습니다! */
-            margin-top: 80px; 
+            /* 이제 이 숫자를 늘리는 대로 박스가 아래로 쑥 내려갑니다! */
+            margin-top: 110px; 
         }
 
         .title-box h1 {
@@ -96,6 +95,9 @@
             letter-spacing: 2px;
             transition: background-color 0.2s ease, transform 0.1s ease;
             z-index: 1;
+            /* 박스가 내려온 만큼 버튼도 아래쪽에 안정적으로 붙어있도록 여백 추가 */
+            margin-top: auto; 
+            margin-bottom: 60px; 
         }
 
         .start-btn:hover {
