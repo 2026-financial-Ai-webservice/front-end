@@ -22,35 +22,53 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            background-color: #F3F4F6;
-            /* 파일명을 '상한가그래프.png'로 정확히 수정했습니다 */
-            background-image: linear-gradient(rgba(243, 244, 246, 0.3), rgba(243, 244, 246, 0.85)), url('stock graph.png');
+            background-color: #FFFFFF; /* 순백색 배경으로 변경 */
+            font-family: 'Pretendard', sans-serif;
+            overflow: hidden; /* 꽉 찬 화면에서 스크롤바가 생기는 것을 방지 */
+            position: relative;
+        }
+
+        /* 배경 차트를 흑백 처리하고 투명도를 주기 위한 분리된 공간 */
+        body::before {
+            content: "";
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background-image: url('상한가그래프.png'); /* 깃허브에서 파일명 영어로 바꾸셨다면 꼭 같이 수정해주세요! */
             background-size: cover;
             background-position: center;
-            font-family: 'Pretendard', sans-serif;
-            overflow-x: hidden;
+            filter: grayscale(100%); /* 차트를 완전한 회색조로 변환 */
+            opacity: 0.15; /* 시선을 뺏지 않도록 투명도 세팅 */
+            z-index: -1;
         }
 
-        .outer-right-border {
-            border-right: 8px solid #D53B3B;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
-        }
-
+        /* 화면 전체를 꽉 채우도록 100vw, 100vh로 뼈대 확장 */
         .main-container {
             position: relative;
-            width: 1150px; 
-            height: 750px; 
-            background-color: #FFFFFF;
+            width: 100vw; 
+            height: 100vh; 
             border: 24px solid #E9E7A2;
             display: flex;
             flex-direction: column;
             align-items: center; 
         }
 
+        /* 왼쪽 안쪽으로 파고든 엣지 있는 빨간 선 */
         .main-container::before {
             content: "";
             position: absolute;
             left: 0;
+            top: -24px;
+            bottom: -24px;
+            width: 8px;
+            background-color: #D53B3B;
+            z-index: 2;
+        }
+
+        /* 오른쪽 바깥쪽을 감싸는 빨간 선 */
+        .main-container::after {
+            content: "";
+            position: absolute;
+            right: -24px;
             top: -24px;
             bottom: -24px;
             width: 8px;
@@ -67,7 +85,7 @@
             align-items: center;
             border-radius: 4px;
             z-index: 1;
-            margin-top: 110px; 
+            margin-top: 15vh; /* 화면 전체 비율에 맞춰 상단 여백 재조정 */
         }
 
         .title-box h1 {
@@ -95,7 +113,7 @@
             transition: background-color 0.2s ease, transform 0.1s ease;
             z-index: 1;
             margin-top: auto; 
-            margin-bottom: 60px; 
+            margin-bottom: 10vh; /* 하단 버튼 위치도 화면 비율에 맞춰 여유롭게 세팅 */
         }
 
         .start-btn:hover {
@@ -106,13 +124,12 @@
 </head>
 <body>
 
-    <div class="outer-right-border">
-        <div class="main-container">
-            <div class="title-box">
-                <h1>RedstocK</h1>
-            </div>
-            <a href="question.html" class="start-btn">START</a>
+    <!-- 이제 군더더기 없이 메인 컨테이너 하나가 화면 전체를 제어합니다 -->
+    <div class="main-container">
+        <div class="title-box">
+            <h1>RedstocK</h1>
         </div>
+        <a href="question.html" class="start-btn">START</a>
     </div>
 
 </body>
