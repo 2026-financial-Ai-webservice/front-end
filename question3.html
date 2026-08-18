@@ -145,7 +145,6 @@
             letter-spacing: -1px;
         }
 
-  
         .cards-wrapper {
             display: flex;
             justify-content: space-between;
@@ -153,7 +152,6 @@
             width: 100%;
             flex-grow: 1; 
         }
-
 
         .risk-card-label {
             flex: 1;
@@ -181,14 +179,12 @@
             box-shadow: 0 6px 15px rgba(0, 0, 0, 0.05);
         }
 
-   
         .card-title-row {
             display: flex;
             align-items: center;
             margin-bottom: 3vh;
         }
 
-       
         .custom-checkbox {
             width: 1.3vw;
             height: 1.3vw;
@@ -247,7 +243,6 @@
 
     <div class="center-panel">
         <div class="q-wrapper">
-  
             <a href="question2.html" class="arrow" style="text-decoration: none;">&lt;</a>
             
             <div class="q-box">
@@ -257,7 +252,6 @@
                 </div>
                 
                 <div class="cards-wrapper">
-                  
                     <label class="risk-card-label">
                         <input type="radio" name="risk_tolerance" value="안정형">
                         <div class="risk-card">
@@ -274,7 +268,6 @@
                         </div>
                     </label>
                     
-                
                     <label class="risk-card-label">
                         <input type="radio" name="risk_tolerance" value="공격형">
                         <div class="risk-card">
@@ -291,15 +284,25 @@
                 </div>
             </div>
             
-          
-            <a href="question4.html" class="arrow" style="text-decoration: none;">&gt;</a>
+            <a href="question4.html" class="arrow next-btn" style="text-decoration: none;">&gt;</a>
         </div>
         
-  
         <div class="page-indicator">3/5</div>
     </div>
 
     <div class="right-edge"></div>
+
+    <script>
+        // 👑 화살표 클릭 시 빈칸 방지 로직
+        const nextBtn = document.querySelector('.next-btn');
+        nextBtn.addEventListener('click', function(e) {
+            const checkedOption = document.querySelector('input[name="risk_tolerance"]:checked');
+            if (!checkedOption) {
+                e.preventDefault(); 
+                alert('정확한 투자성향 분석을 위해 위험 성향을 선택해주세요!');
+            }
+        });
+    </script>
 
 </body>
 </html>
