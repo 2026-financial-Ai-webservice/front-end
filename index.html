@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+  <!DOCTYPE html>
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
@@ -22,37 +22,23 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            background-color: #FFFFFF; /* 순백색 배경으로 변경 */
+            background-color: #FFFFFF; /* 깔끔한 순백색 배경 */
             font-family: 'Pretendard', sans-serif;
-            overflow: hidden; /* 꽉 찬 화면에서 스크롤바가 생기는 것을 방지 */
-            position: relative;
+            overflow: hidden;
         }
 
-        /* 배경 차트를 흑백 처리하고 투명도를 주기 위한 분리된 공간 */
-        body::before {
-            content: "";
-            position: absolute;
-            top: 0; left: 0; right: 0; bottom: 0;
-            background-image: url('상한가그래프.png'); /* 깃허브에서 파일명 영어로 바꾸셨다면 꼭 같이 수정해주세요! */
-            background-size: cover;
-            background-position: center;
-            filter: grayscale(100%); /* 차트를 완전한 회색조로 변환 */
-            opacity: 0.15; /* 시선을 뺏지 않도록 투명도 세팅 */
-            z-index: -1;
-        }
-
-        /* 화면 전체를 꽉 채우도록 100vw, 100vh로 뼈대 확장 */
+        /* 화면 전체를 액자처럼 꽉 채우는 프레임 */
         .main-container {
             position: relative;
             width: 100vw; 
             height: 100vh; 
-            border: 24px solid #E9E7A2;
+            border: 24px solid #E9E7A2; /* 네 면 모두 두꺼운 연두빛 테두리 */
             display: flex;
             flex-direction: column;
             align-items: center; 
         }
 
-        /* 왼쪽 안쪽으로 파고든 엣지 있는 빨간 선 */
+        /* 왼쪽 안쪽 연두색 테두리에 밀착한 빨간 선 */
         .main-container::before {
             content: "";
             position: absolute;
@@ -64,7 +50,7 @@
             z-index: 2;
         }
 
-        /* 오른쪽 바깥쪽을 감싸는 빨간 선 */
+        /* 오른쪽 가장자리 외곽을 감싸는 빨간 선 */
         .main-container::after {
             content: "";
             position: absolute;
@@ -76,35 +62,39 @@
             z-index: 2;
         }
 
+        /* 화면 크기에 비례하여 확장된 타이틀 박스 */
         .title-box {
-            width: 920px; 
-            height: 320px; 
+            width: 75vw; /* 화면 크기에 맞춰 유연하게 늘어나는 가로폭 */
+            height: 420px; /* 세로 높이를 더 묵직하게 키움 */
             background-color: #E9E7A2;
             display: flex;
             justify-content: center;
             align-items: center;
             border-radius: 4px;
             z-index: 1;
-            margin-top: 15vh; /* 화면 전체 비율에 맞춰 상단 여백 재조정 */
+            /* 박스를 아래로 더 여유롭게 밀어내기 위해 20vh로 확장 */
+            margin-top: 20vh; 
         }
 
+        /* 존재감을 키운 RedstocK 타이포그래피 */
         .title-box h1 {
             font-family: 'Joan', serif;
-            font-size: 200px; 
+            font-size: 260px; /* 폰트 사이즈 대폭 확대 */
             font-weight: 400; 
             color: #000000;
             line-height: 1;
             white-space: nowrap;
-            letter-spacing: -2px;
+            letter-spacing: -3px; /* 글자가 커진 만큼 자간을 살짝 더 좁혀 정돈감 부여 */
         }
 
+        /* START 버튼 */
         .start-btn {
             background-color: #D53B3B;
             color: #FFFFFF;
             font-family: 'Joan', serif;
-            font-size: 24px;
+            font-size: 26px; /* 버튼 글씨도 미세하게 확대 */
             font-weight: 400;
-            padding: 20px 80px;
+            padding: 22px 90px; /* 버튼 크기도 시원하게 키움 */
             border: none;
             border-radius: 4px;
             cursor: pointer;
@@ -113,7 +103,7 @@
             transition: background-color 0.2s ease, transform 0.1s ease;
             z-index: 1;
             margin-top: auto; 
-            margin-bottom: 10vh; /* 하단 버튼 위치도 화면 비율에 맞춰 여유롭게 세팅 */
+            margin-bottom: 8vh; /* 전체 비율에 맞는 안정적인 하단 여백 */
         }
 
         .start-btn:hover {
@@ -124,7 +114,6 @@
 </head>
 <body>
 
-    <!-- 이제 군더더기 없이 메인 컨테이너 하나가 화면 전체를 제어합니다 -->
     <div class="main-container">
         <div class="title-box">
             <h1>RedstocK</h1>
