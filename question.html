@@ -249,19 +249,43 @@
 
     <div class="right-edge"></div>
 
-<script>
+    <script>
         const inputField = document.querySelector('.input-area input');
+        const addBtns = document.querySelectorAll('.add-btn');
         
+        // 직접 타이핑할 때 숫자가 아닌 문자는 지우고 맨 뒤에 '원'을 붙여주는 기능
         inputField.addEventListener('input', function(e) {
-       
-            let value = e.target.value.replace(/원/g, '');
+            let value = e.target.value.replace(/[^0-9]/g, '');
             
-          
             if (value.length > 0) {
                 e.target.value = value + '원';
-                
                 e.target.setSelectionRange(value.length, value.length);
+            } else {
+                e.target.value = '';
             }
+        });
+
+        // 하단 버튼들을 눌렀을 때 금액을 계산해서 더해주는 기능
+        addBtns.forEach(function(btn) {
+            btn.addEventListener('click', function() {
+                // 현재 입력된 값에서 숫자만 쏙 빼옵니다. (아무것도 없으면 0으로 계산)
+                let currentValue = inputField.value.replace(/[^0-9]/g, '');
+                let currentNumber = currentValue === '' ? 0 : parseInt(currentValue, 10);
+                
+                let addAmount = 0;
+                
+                // 어떤 버튼을 눌렀는지 확인하고 그에 맞는 숫자를 더할 준비를 합니다.
+                if (this.innerText === '+10만원') {
+                    addAmount = 100000;
+                } else if (this.innerText === '+100만원') {
+                    addAmount = 1000000;
+                } else if (this.innerText === '+1000만원') {
+                    addAmount = 10000000;
+                }
+                
+                // 기존 숫자와 새로운 숫자를 더한 뒤 '원'을 붙여서 화면에 띄워줍니다.
+                inputField.value = (currentNumber + addAmount) + '원';
+            });
         });
     </script>
 
