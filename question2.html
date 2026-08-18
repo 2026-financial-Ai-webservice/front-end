@@ -242,13 +242,24 @@
                 </div>
             </div>
             
-            <a href="question3.html" class="arrow" style="text-decoration: none;">&gt;</a>
+            <a href="question3.html" class="arrow next-btn" style="text-decoration: none;">&gt;</a>
         </div>
         
         <div class="page-indicator">2/5</div>
     </div>
 
     <div class="right-edge"></div>
+
+    <script>
+        const nextBtn = document.querySelector('.next-btn');
+        nextBtn.addEventListener('click', function(e) {
+            const checkedOption = document.querySelector('input[name="invest_period"]:checked');
+            if (!checkedOption) {
+                e.preventDefault(); 
+                alert('가장 알맞은 전략을 찾기 위해 투자 가능 기간을 선택해 주세요!');
+            }
+        });
+    </script>
 
 </body>
 </html>
