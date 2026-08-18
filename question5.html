@@ -118,7 +118,7 @@
 
         .q-box {
             width: 42vw;
-            height: 52vh;
+            min-height: 52vh;
             background-color: #E9E7A2;
             border-radius: 20px;
             padding: 4vw;
@@ -167,7 +167,7 @@
         .valuation-card {
             background-color: #FFFFFF;
             height: 100%;
-            padding: 2.5vw 2vw;
+            padding: 4vh 2vw;
             display: flex;
             flex-direction: column;
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.02);
@@ -243,7 +243,6 @@
 
     <div class="center-panel">
         <div class="q-wrapper">
-            <!-- 4번 질문으로 돌아가기 -->
             <a href="question4.html" class="arrow" style="text-decoration: none;">&lt;</a>
             
             <div class="q-box">
@@ -253,7 +252,6 @@
                 </div>
                 
                 <div class="cards-wrapper">
-                    <!-- 현재자산 카드 -->
                     <label class="valuation-card-label">
                         <input type="radio" name="valuation_metric" value="현재자산">
                         <div class="valuation-card">
@@ -270,7 +268,6 @@
                         </div>
                     </label>
                     
-                    <!-- 미래수익 카드 -->
                     <label class="valuation-card-label">
                         <input type="radio" name="valuation_metric" value="미래수익">
                         <div class="valuation-card">
@@ -289,7 +286,6 @@
                 </div>
             </div>
             
-            <!-- 결과 페이지(또는 로딩 페이지)로 넘어가기 -->
             <a href="result.html" class="arrow next-btn" style="text-decoration: none;">&gt;</a>
         </div>
         
