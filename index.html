@@ -4,6 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Redstock - Main</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Joan&display=swap" rel="stylesheet">
+    
     <style>
         * {
             margin: 0;
@@ -22,59 +27,78 @@
             background-size: cover;
             background-position: center;
             font-family: 'Pretendard', sans-serif;
+            overflow-x: hidden; /* 화면 밖으로 살짝 나가는 요소 정리 */
         }
 
-        /* 바깥쪽 얇은 딥레드 선을 담당하는 래퍼 (좌우에만 적용) */
-        .outer-red-border {
-            border-left: 6px solid #D53B3B;
-            border-right: 6px solid #D53B3B;
+        /* 오른쪽 바깥 얇은 딥레드 선을 담당하는 래퍼 */
+        .outer-right-border {
+            border-right: 8px solid #D53B3B; /* 오른쪽에만 바깥 테두리 */
             box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
         }
 
         /* 안쪽 두꺼운 연두빛 테두리를 담당하는 메인 컨테이너 */
         .main-container {
-            width: 1100px;
-            height: 750px;
+            position: relative; /* 왼쪽 안쪽 선을 배치하기 위한 기준점 */
+            width: 1250px; /* 1092px짜리 박스를 담기 위해 가로폭 확장 */
+            height: 800px;
             background-color: #FFFFFF;
             border: 24px solid #E9E7A2; /* 4면 모두 두꺼운 연두빛 테두리 */
             display: flex;
             flex-direction: column;
             justify-content: space-between;
             align-items: center;
-            padding: 90px 0;
+            padding: 100px 0 80px 0;
         }
 
-        /* Redstock 타이틀 박스 */
+        /* 👑 핵심: 왼쪽 안쪽으로 훅 파고들어온 비대칭 딥레드 선 */
+        .main-container::before {
+            content: "";
+            position: absolute;
+            left: 60px; /* 텍스트 박스 쪽으로 얼마나 당길지 이 숫자로 조절하세요! (크면 클수록 안으로 들어옴) */
+            top: 0;
+            bottom: 0;
+            width: 8px; /* 선 두께 */
+            background-color: #D53B3B;
+            z-index: 2; /* 선이 다른 요소들 위로 지나가게 할지, 밑으로 깔릴지 결정 */
+        }
+
+        /* 거대해진 Redstock 타이틀 박스 (피그마 수치 적용) */
         .title-box {
+            width: 1092px;
+            height: 385px;
             background-color: #E9E7A2;
-            padding: 45px 100px;
             display: flex;
             justify-content: center;
             align-items: center;
             border-radius: 4px;
+            z-index: 1; /* 왼쪽 선과의 겹침 순서 정리 */
         }
 
+        /* Joan 폰트 + 250px 사이즈 적용 */
         .title-box h1 {
-            font-size: 76px;
-            font-weight: 700;
-            font-family: 'Georgia', serif;
+            font-family: 'Joan', serif;
+            font-size: 250px;
+            font-weight: 700; /* 볼드체 */
             color: #000000;
-            letter-spacing: -1px;
+            line-height: 1; /* 박스 밖으로 텍스트 위아래가 넘치지 않게 고정 */
+            white-space: nowrap; /* 글씨가 커도 밑으로 줄바꿈되지 않게 강제 1줄 */
+            letter-spacing: -2px;
         }
 
         /* START 버튼 */
         .start-btn {
             background-color: #D53B3B;
             color: #FFFFFF;
-            font-size: 20px;
-            font-weight: 600;
-            padding: 18px 75px;
+            font-size: 24px;
+            font-weight: bold;
+            padding: 20px 80px;
             border: none;
             border-radius: 4px;
             cursor: pointer;
             text-decoration: none;
             letter-spacing: 2px;
             transition: background-color 0.2s ease, transform 0.1s ease;
+            z-index: 1;
         }
 
         .start-btn:hover {
@@ -85,9 +109,8 @@
 </head>
 <body>
 
-    <!-- 좌우 빨간 선을 그려주는 바깥쪽 박스 -->
-    <div class="outer-red-border">
-        <!-- 네 방향 연두색 테두리를 그려주는 안쪽 박스 -->
+    <div class="outer-right-border">
+        
         <div class="main-container">
             
             <div class="title-box">
@@ -97,6 +120,7 @@
             <a href="question.html" class="start-btn">START</a>
             
         </div>
+        
     </div>
 
 </body>
