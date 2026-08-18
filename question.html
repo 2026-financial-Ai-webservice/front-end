@@ -7,7 +7,7 @@
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Hahmlet:wght@400;500;700&family=Joan&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Joan&display=swap" rel="stylesheet">
     
     <style>
         * {
@@ -59,23 +59,27 @@
             line-height: 0.8;
         }
 
+        /* 시작 따옴표 아래에만 여백을 주어 글자와의 간격 확보 */
         .quote-mark.start {
             text-align: left;
+            margin-bottom: 1.5vh;
         }
 
+        /* 끝 따옴표 위쪽에만 동일한 여백을 주어 완벽한 대칭 확보 */
         .quote-mark.end {
             text-align: right;
-            margin-top: 1vh;
+            margin-top: 1.5vh;
         }
 
+        /* 👑 굴림체 적용 및 정중앙 정렬을 위한 여백 제거 */
         .quote-text {
-            font-family: 'Hahmlet', serif; 
+            font-family: 'Gulim', '굴림', sans-serif; 
             font-size: 2.3vw;
-            font-weight: 500;
-            line-height: 1.5;
+            font-weight: bold; /* 굴림체는 두께감이 있어야 예쁩니다 */
+            line-height: 1.4;
             letter-spacing: -1px;
             text-align: center; 
-            margin: 1vh 0;
+            margin: 0; /* 위아래 불균형을 만들던 여백을 완전히 0으로 없앰 */
         }
 
         /* 오른쪽 콘텐츠 영역 */
@@ -196,7 +200,6 @@
             box-shadow: 0 6px 15px rgba(0, 0, 0, 0.08);
         }
 
-        /* 👑 한 템포 부드럽게 크기가 줄어든 페이지 표시 */
         .page-indicator {
             position: absolute;
             bottom: 8vh;
