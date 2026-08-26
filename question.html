@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Redstock - Question 1</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Joan&display=swap" rel="stylesheet">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            background-color: #FFFFFF;
+            font-family: 'Pretendard', sans-serif;
+            overflow: hidden;
+        }
+
+        .left-panel {
+            width: 32vw;
+            height: 100vh;
+            background-color: #D53B3B;
+            padding: 5vw 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center; 
+            color: #FFFFFF;
+        }
+
+        .left-panel h1 {
+            font-family: 'Joan', serif;
+            font-size: 5vw;
+            font-weight: 400;
+            margin-bottom: 19vh;
+            letter-spacing: -1px;
+            text-align: center;
+            width: 100%; 
+        }
+
+        .quote-box {
+            display: flex;
+            flex-direction: column;
+            width: 80%; 
+        }
+
+        .quote-mark {
+            font-family: 'Joan', serif;
+            font-size: 6vw;
+            line-height: 0.8;
+        }
+
+        .quote-mark.start {
+            text-align: left;
+            margin-bottom: 3vh; 
+        }
+
+        .quote-mark.end {
+            text-align: right;
+            margin-top: 7vh; 
+        }
+
+        .quote-text {
+            font-family: 'Pretendard', sans-serif; 
+            font-size: 2.3vw;
+            font-weight: 700; 
+            line-height: 1.4;
+            letter-spacing: -1px;
+            text-align: center; 
+            margin: 0; 
+        }
+
+        .center-panel {
+            width: 66vw;
+            height: 100vh;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .right-edge {
+            width: 2vw;
+            height: 100vh;
+            background-color: #E9E7A2;
+            border-left: 6px solid #D53B3B;
+        }
+
+        .q-wrapper {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 2vw;
+            width: 100%;
+        }
+
+        .arrow {
+            font-size: 3.5vw;
+            color: #555555;
+            font-weight: 300;
+            cursor: pointer;
+            user-select: none;
+            transition: color 0.2s;
+        }
+
+        .arrow:hover {
+            color: #000000;
+        }
+
+        .q-box {
+            width: 42vw;
+            min-height: 52vh;
+            background-color: #E9E7A2;
+            border-radius: 20px;
+            padding: 4vw;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            position: relative;
+        }
+
+        .q-header {
+            margin-bottom: 6vh;
+        }
+
+        .q-num {
+            font-size: 1.8vw;
+            font-weight: 800;
+            color: #5B5A5A;
+            margin-bottom: 0.5vh;
+        }
+
+        .q-title {
+            font-size: 2vw;
+            font-weight: 700;
+            color: #5B5A5A;
+            letter-spacing: -1px;
+        }
+
+        .input-area {
+            display: flex;
+            flex-direction: column; 
+            align-items: center;
+            margin-bottom: 5vh; 
+        }
+
+        .input-area input {
+            width: 75%;
+            padding: 2.5vh 2vw;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.2vw;
+            text-align: center;
+            outline: none;
+            font-family: 'Pretendard', sans-serif;
+            color: #5B5A5A;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+            margin-bottom: 1.5vh; 
+        }
+
+        .input-area input::placeholder {
+            color: #BDBDBD;
+        }
+
+        .submit-btn {
+            background-color: #5B5A5A;
+            color: #FFFFFF;
+            border: none;
+            padding: 0.8vh 2.5vw;
+            border-radius: 20px;
+            font-size: 0.9vw;
+            font-weight: 600;
+            cursor: pointer;
+            font-family: 'Pretendard', sans-serif;
+            transition: background-color 0.2s ease, transform 0.1s ease;
+        }
+
+        .submit-btn:hover {
+            background-color: #333333;
+            transform: translateY(-1px);
+        }
+
+        .btn-group {
+            display: flex;
+            justify-content: center;
+            gap: 1.5vw;
+        }
+
+        .add-btn {
+            background-color: #FFFFFF;
+            border: none;
+            padding: 1.2vh 1.8vw;
+            border-radius: 50px;
+            font-size: 1.1vw;
+            font-weight: 700;
+            color: #5B5A5A;
+            cursor: pointer;
+            transition: transform 0.1s ease, box-shadow 0.1s ease;
+            font-family: 'Pretendard', sans-serif;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.03);
+        }
+
+        .add-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.08);
+        }
+
+        .page-indicator {
+            position: absolute;
+            bottom: 8vh;
+            font-family: 'Joan', serif;
+            font-size: 1.8vw; 
+            color: #555555;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="left-panel">
+        <h1>RedstocK</h1>
+        <div class="quote-box">
+            <div class="quote-mark start">“</div>
+            <div class="quote-text">
+                투자자님의<br>
+                성향을 분석합니다
+            </div>
+            <div class="quote-mark end">”</div>
+        </div>
+    </div>
+
+    <div class="center-panel">
+        <div class="q-wrapper">
+            <a href="index.html" class="arrow" style="text-decoration: none;">&lt;</a>
+            
+            <div class="q-box">
+                <div class="q-header">
+                    <div class="q-num">Q1</div>
+                    <div class="q-title">시드머니 규모를 입력하세요</div>
+                </div>
+                
+                <div class="input-area">
+                    <input type="text" placeholder="예: 5,000만원">
+                    <button class="submit-btn">입력완료</button>
+                </div>
+                
+                <div class="btn-group">
+                    <button class="add-btn">+10만원</button>
+                    <button class="add-btn">+100만원</button>
+                    <button class="add-btn">+1000만원</button>
+                </div>
+            </div>
+            
+            <a href="question2.html" class="arrow next-btn" style="text-decoration: none;">&gt;</a>
+        </div>
+        
+        <div class="page-indicator">1/5</div>
+    </div>
+
+    <div class="right-edge"></div>
+
+    <script>
+        const inputField = document.querySelector('.input-area input');
+        const addBtns = document.querySelectorAll('.add-btn');
+        const submitBtn = document.querySelector('.submit-btn');
+        const nextBtn = document.querySelector('.next-btn');
+     
+        let isSubmitted = false;
+        
+        inputField.addEventListener('input', function(e) {
+            // 값을 수정하면 다시 입력완료를 눌러야 하므로 상태 초기화
+            isSubmitted = false; 
+            
+            let value = e.target.value.replace(/[^0-9]/g, '');
+            
+            if (value.length > 0) {
+                let formattedValue = Number(value).toLocaleString('ko-KR');
+                e.target.value = formattedValue + '원';
+                e.target.setSelectionRange(formattedValue.length, formattedValue.length);
+            } else {
+                e.target.value = '';
+            }
+        });
+
+        addBtns.forEach(function(btn) {
+            btn.addEventListener('click', function() {
+                // 버튼으로 금액을 추가해도 다시 입력완료를 눌러야 하므로 상태 초기화
+                isSubmitted = false;
+                
+                let currentValue = inputField.value.replace(/[^0-9]/g, '');
+                let currentNumber = currentValue === '' ? 0 : parseInt(currentValue, 10);
+                
+                let addAmount = 0;
+                
+                if (this.innerText === '+10만원') {
+                    addAmount = 100000;
+                } else if (this.innerText === '+100만원') {
+                    addAmount = 1000000;
+                } else if (this.innerText === '+1000만원') {
+                    addAmount = 10000000;
+                }
+                
+                let newTotal = currentNumber + addAmount;
+                inputField.value = newTotal.toLocaleString('ko-KR') + '원';
+            });
+        });
+
+        submitBtn.addEventListener('click', function() {
+            if (inputField.value === '') {
+                alert('정확한 성향 분석을 위해 시드머니 규모를 먼저 입력해 주세요! 💸');
+            } else {
+                
+                isSubmitted = true;
+                alert(inputField.value + ' 입력이 완료되었습니다!');
+            }
+        });
+
+       
+        nextBtn.addEventListener('click', function(e) {
+            let currentValue = inputField.value.replace(/[^0-9]/g, '');
+            
+            // 1. 값이 아예 없거나 0원인 경우
+            if (currentValue === '' || parseInt(currentValue, 10) === 0) {
+                e.preventDefault(); 
+                alert('정확한 투자 성향 분석을 위해 시드머니 규모를 입력해 주세요!');
+            } 
+            // 2. 값은 있지만 입력완료 버튼을 안 누른 경우
+            else if (!isSubmitted) {
+                e.preventDefault(); 
+                alert('입력완료 버튼을 먼저 눌러주세요!');
+            }
+        });
+    </script>
+
+</body>
+</html>

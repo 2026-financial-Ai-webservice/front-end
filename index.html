@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Redstock - Main</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Joan&display=swap" rel="stylesheet">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #FFFFFF; 
+            font-family: 'Pretendard', sans-serif;
+            overflow: hidden;
+        }
+
+        .main-container {
+            position: relative;
+            width: 100vw; 
+            height: 100vh; 
+            border: 24px solid #E9E7A2; 
+            display: flex;
+            flex-direction: column;
+            align-items: center; 
+        }
+
+        .main-container::before {
+            content: "";
+            position: absolute;
+            left: 0;
+            top: -24px;
+            bottom: -24px;
+            width: 8px;
+            background-color: #D53B3B;
+            z-index: 2;
+        }
+
+        .main-container::after {
+            content: "";
+            position: absolute;
+            right: -24px;
+            top: -24px;
+            bottom: -24px;
+            width: 8px;
+            background-color: #D53B3B;
+            z-index: 2;
+        }
+
+        .title-box {
+            width: 78vw; /* 가로폭 유지 */
+            height: 440px; /* 세로 높이를 시원하게 확장 */
+            background-color: #E9E7A2;
+            display: flex;
+            justify-content: center;
+            align-items: center; /* 상하 완벽한 중앙 정렬을 자동으로 유지 */
+            border-radius: 4px;
+            z-index: 1;
+            margin-top: 18vh; /* 박스를 기존보다 더 아래로 끌어내림 */
+        }
+
+        .title-box h1 {
+            font-family: 'Joan', serif;
+            font-size: 270px; /* 폰트 사이즈를 박스에 맞춰 살짝 키움 */
+            font-weight: 400; 
+            color: #000000;
+            line-height: 1;
+            white-space: nowrap;
+            letter-spacing: -4px; 
+        }
+
+        .start-btn {
+            background-color: #D53B3B;
+            color: #FFFFFF;
+            font-family: 'Joan', serif;
+            font-size: 26px; 
+            font-weight: 400;
+            padding: 22px 90px; 
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            text-decoration: none;
+            letter-spacing: 2px;
+            transition: background-color 0.2s ease, transform 0.1s ease;
+            z-index: 1;
+            position: absolute;
+            bottom: 10vh; 
+        }
+
+        .start-btn:hover {
+            background-color: #BE3232;
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="main-container">
+        <div class="title-box">
+            <h1>RedstocK</h1>
+        </div>
+        <a href="question.html" class="start-btn">START</a>
+    </div>
+
+</body>
+</html>

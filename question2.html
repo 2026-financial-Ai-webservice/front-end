@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Redstock - Question 2</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Joan&display=swap" rel="stylesheet">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            background-color: #FFFFFF;
+            font-family: 'Pretendard', sans-serif;
+            overflow: hidden;
+        }
+
+        .left-panel {
+            width: 32vw;
+            height: 100vh;
+            background-color: #D53B3B;
+            padding: 5vw 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center; 
+            color: #FFFFFF;
+        }
+
+        .left-panel h1 {
+            font-family: 'Joan', serif;
+            font-size: 5vw;
+            font-weight: 400;
+            margin-bottom: 19vh;
+            letter-spacing: -1px;
+            text-align: center;
+            width: 100%; 
+        }
+
+        .quote-box {
+            display: flex;
+            flex-direction: column;
+            width: 80%; 
+        }
+
+        .quote-mark {
+            font-family: 'Joan', serif;
+            font-size: 6vw;
+            line-height: 0.8;
+        }
+
+        .quote-mark.start {
+            text-align: left;
+            margin-bottom: 3vh; 
+        }
+
+        .quote-mark.end {
+            text-align: right;
+            margin-top: 7vh; 
+        }
+
+        .quote-text {
+            font-family: 'Pretendard', sans-serif; 
+            font-size: 2.3vw;
+            font-weight: 700; 
+            line-height: 1.4;
+            letter-spacing: -1px;
+            text-align: center; 
+            margin: 0; 
+        }
+
+        .center-panel {
+            width: 66vw;
+            height: 100vh;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .right-edge {
+            width: 2vw;
+            height: 100vh;
+            background-color: #E9E7A2;
+            border-left: 6px solid #D53B3B;
+        }
+
+        .q-wrapper {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 2vw;
+            width: 100%;
+        }
+
+        .arrow {
+            font-size: 3.5vw;
+            color: #555555;
+            font-weight: 300;
+            cursor: pointer;
+            user-select: none;
+            transition: color 0.2s;
+        }
+
+        .arrow:hover {
+            color: #000000;
+        }
+
+        .q-box {
+            width: 42vw;
+            height: 52vh;
+            background-color: #E9E7A2;
+            border-radius: 20px;
+            padding: 4vw;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            position: relative;
+        }
+
+        .q-header {
+            margin-bottom: 4vh;
+        }
+
+        .q-num {
+            font-size: 1.8vw;
+            font-weight: 800;
+            color: #5B5A5A;
+            margin-bottom: 0.5vh;
+        }
+
+        .q-title {
+            font-size: 2vw;
+            font-weight: 700;
+            color: #5B5A5A;
+            letter-spacing: -1px;
+        }
+
+        .options-group {
+            display: flex;
+            flex-direction: column;
+            gap: 3.5vh; 
+            margin-left: 1vw; 
+        }
+
+        .option-label {
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            font-family: 'Pretendard', sans-serif;
+            font-size: 1.5vw;
+            font-weight: 700;
+            color: #5B5A5A;
+            transition: color 0.2s;
+        }
+
+        .option-label:hover {
+            color: #000000;
+        }
+
+        .option-label input[type="radio"] {
+            display: none; 
+        }
+
+        .custom-box {
+            width: 2.2vw;
+            height: 2.2vw;
+            background-color: #FFFFFF;
+            margin-right: 1.5vw;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 2px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.02);
+        }
+
+        .option-label input[type="radio"]:checked + .custom-box::after {
+            content: "✔";
+            color: #D53B3B;
+            font-size: 1.5vw;
+        }
+
+        .page-indicator {
+            position: absolute;
+            bottom: 8vh;
+            font-family: 'Joan', serif;
+            font-size: 1.8vw; 
+            color: #555555;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="left-panel">
+        <h1>RedstocK</h1>
+        <div class="quote-box">
+            <div class="quote-mark start">“</div>
+            <div class="quote-text">
+                투자자님의<br>
+                성향을 분석합니다
+            </div>
+            <div class="quote-mark end">”</div>
+        </div>
+    </div>
+
+    <div class="center-panel">
+        <div class="q-wrapper">
+            <a href="question.html" class="arrow" style="text-decoration: none;">&lt;</a>
+            
+            <div class="q-box">
+                <div class="q-header">
+                    <div class="q-num">Q2</div>
+                    <div class="q-title">투자 가능 기간을 선택하세요</div>
+                </div>
+                
+                <div class="options-group">
+                    <label class="option-label">
+                        <input type="radio" name="invest_period" value="1년 미만">
+                        <div class="custom-box"></div>
+                        1년 미만
+                    </label>
+                    <label class="option-label">
+                        <input type="radio" name="invest_period" value="1년 이상 3년 미만">
+                        <div class="custom-box"></div>
+                        1년 이상 3년 미만
+                    </label>
+                    <label class="option-label">
+                        <input type="radio" name="invest_period" value="3년 이상">
+                        <div class="custom-box"></div>
+                        3년 이상
+                    </label>
+                </div>
+            </div>
+            
+            <a href="question3.html" class="arrow next-btn" style="text-decoration: none;">&gt;</a>
+        </div>
+        
+        <div class="page-indicator">2/5</div>
+    </div>
+
+    <div class="right-edge"></div>
+
+    <script>
+        const nextBtn = document.querySelector('.next-btn');
+        nextBtn.addEventListener('click', function(e) {
+            const checkedOption = document.querySelector('input[name="invest_period"]:checked');
+            if (!checkedOption) {
+                e.preventDefault(); 
+                alert('정확한 투자 성향 분석을 위해 투자 가능 기간을 선택해 주세요!');
+            }
+        });
+    </script>
+
+</body>
+</html>
