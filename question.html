@@ -319,6 +319,13 @@
             } else {
                 
                 isSubmitted = true;
+
+                // 1. '원', ',' 등 한글/특수문자를 지우고 숫자만 추출
+                let numericValue = inputField.value.replace(/[^0-9]/g, '');
+        
+                // 2. localStorage에 숫자로 저장
+                localStorage.setItem('seedMoney', Number(numericValue));
+
                 alert(inputField.value + ' 입력이 완료되었습니다!');
             }
         });

@@ -253,7 +253,7 @@
                 
                 <div class="cards-wrapper">
                     <label class="valuation-card-label">
-                        <input type="radio" name="valuation_metric" value="현재자산">
+                        <input type="radio" name="valuation_metric" value="CURRENT_ASSET">
                         <div class="valuation-card">
                             <div class="card-title-row">
                                 <div class="custom-checkbox"></div>
@@ -269,7 +269,7 @@
                     </label>
                     
                     <label class="valuation-card-label">
-                        <input type="radio" name="valuation_metric" value="미래수익">
+                        <input type="radio" name="valuation_metric" value="FUTURE_EARNINGS">
                         <div class="valuation-card">
                             <div class="card-title-row">
                                 <div class="custom-checkbox"></div>
@@ -301,6 +301,8 @@
             if (!checkedOption) {
                 e.preventDefault(); 
                 alert('정확한 투자 성향 분석을 위해 선호하는 지표를 선택해 주세요!');
+            } else {
+                localStorage.setItem('valuationPreference', checkedOption.value);
             }
         });
     </script>

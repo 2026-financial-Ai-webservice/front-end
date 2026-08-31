@@ -282,9 +282,18 @@
     }
     
     // 백엔드 fetch 연동
-    //fetch('http://백엔드주소/api/v1/dashboard', { method: 'POST', /* ... */ })
-    //  .then(res => res.json())
-    //  .then(data => renderRedstockDashboard(data));
+    // GET 예시: 추천 기업 정보 또는 결과 조회
+fetch('https://api.financial-ai.p-e.kr/portfolios/${shareToken}')
+  .then(response => response.json())
+  .then(data => {
+    console.log(data); // 백엔드에서 받아온 데이터 확인
+    
+    // 새로 추가되었다는 allocationRation(퍼센트) 사용 예시
+    console.log(data.allocationRation); 
+    
+    // 받아온 data를 화면(HTML)에 그려주는 코드 작성
+  })
+  .catch(error => console.error('에러 발생:', error));
 
 
 // 1. 와이어프레임 텍스트 내용을 그대로 담은 가짜 데이터 객체 생성

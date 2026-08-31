@@ -253,7 +253,7 @@
                 
                 <div class="cards-wrapper">
                     <label class="risk-card-label">
-                        <input type="radio" name="dividend_pref" value="현금흐름">
+                        <input type="radio" name="dividend_pref" value="DIVIDEND">
                         <div class="risk-card">
                             <div class="card-title-row">
                                 <div class="custom-checkbox"></div>
@@ -267,7 +267,7 @@
                     </label>
                     
                     <label class="risk-card-label">
-                        <input type="radio" name="dividend_pref" value="시세차익">
+                        <input type="radio" name="dividend_pref" value="CAPITAL_GAIN">
                         <div class="risk-card">
                             <div class="card-title-row">
                                 <div class="custom-checkbox"></div>
@@ -297,6 +297,8 @@
             if (!checkedOption) {
                 e.preventDefault(); 
                 alert('정확한 투자 성향 분석을 위해 배당 선호를 선택해 주세요!');
+            } else {
+                localStorage.setItem('returnPreference', checkedOption.value);
             }
         });
     </script>

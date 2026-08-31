@@ -225,17 +225,17 @@
                 
                 <div class="options-group">
                     <label class="option-label">
-                        <input type="radio" name="invest_period" value="1년 미만">
+                        <input type="radio" name="invest_period" value="UNDER_1_YEAR">
                         <div class="custom-box"></div>
                         1년 미만
                     </label>
                     <label class="option-label">
-                        <input type="radio" name="invest_period" value="1년 이상 3년 미만">
+                        <input type="radio" name="invest_period" value="ONE_TO_THREE_YEARS">
                         <div class="custom-box"></div>
                         1년 이상 3년 미만
                     </label>
                     <label class="option-label">
-                        <input type="radio" name="invest_period" value="3년 이상">
+                        <input type="radio" name="invest_period" value="OVER_3_YEARS">
                         <div class="custom-box"></div>
                         3년 이상
                     </label>
@@ -257,6 +257,8 @@
             if (!checkedOption) {
                 e.preventDefault(); 
                 alert('정확한 투자 성향 분석을 위해 투자 가능 기간을 선택해 주세요!');
+            } else {
+                localStorage.setItem('investmentPeriod', checkedOption.value);
             }
         });
     </script>

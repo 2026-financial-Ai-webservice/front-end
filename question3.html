@@ -253,7 +253,7 @@
                 
                 <div class="cards-wrapper">
                     <label class="risk-card-label">
-                        <input type="radio" name="risk_tolerance" value="안정형">
+                        <input type="radio" name="risk_tolerance" value="STABLE">
                         <div class="risk-card">
                             <div class="card-title-row">
                                 <div class="custom-checkbox"></div>
@@ -269,7 +269,7 @@
                     </label>
                     
                     <label class="risk-card-label">
-                        <input type="radio" name="risk_tolerance" value="공격형">
+                        <input type="radio" name="risk_tolerance" value="AGGRESSIVE">
                         <div class="risk-card">
                             <div class="card-title-row">
                                 <div class="custom-checkbox"></div>
@@ -299,6 +299,8 @@
             if (!checkedOption) {
                 e.preventDefault(); 
                 alert('정확한 투자 성향 분석을 위해 위험 성향을 선택해 주세요!');
+            } else {
+                localStorage.setItem('riskPreference', checkedOption.value);
             }
         });
     </script>
