@@ -225,220 +225,201 @@
 </div>
 
   <script>
-    let top5ChartInstance = null;
+let top5ChartInstance = null;
 
-    // 백엔드 응답(JSON)을 받아서 화면 전체를 갱신하는 함수
-    function renderRedstockDashboard(data) {
-      // A. [상단 왼쪽] 포트폴리오 요약 데이터 텍스트 주입
-      document.getElementById('total-amount').innerText = `${data.summary.totalAmount.toLocaleString()}원`;
-      document.getElementById('dividend-yield').innerText = `연 ${data.summary.dividendYield}%`;
-      document.getElementById('dcf-upside').innerText = `연 ${data.summary.dcfUpside}%`;
+// ==========================================
+// 1. 페이지 로드 시 백엔드 데이터 조회
+// ==========================================
+window.addEventListener('DOMContentLoaded', () => {
+  // A. 헤더 조립
+  fetch('header.html')
+    .then(response => response.text())
+    .then(data => {
+      const headerContainer = document.getElementById('header-container');
+      if (headerContainer) headerContainer.innerHTML = data;
+    })
+    .catch(error => console.error('헤더를 불러오는 중 에러 발생:', error));
 
-      // B. [상단 오른쪽] Top 5 도넛 차트 그리기
-      const ctx = document.getElementById('top5Chart').getContext('2d');
-      if (top5ChartInstance) { top5ChartInstance.destroy(); }
+  // B. URL 주소창에서 shareToken 추출
+  const urlParams = new URLSearchParams(window.location.search);
+  const shareToken = urlParams.get('token');
 
-      top5ChartInstance = new Chart(ctx, {
-        type: 'doughnut',
-        data: {
-          labels: data.stocks.map(s => `${s.name}: ${s.sharePercent}%`),
-          datasets: [{
-            data: data.stocks.map(s => s.sharePercent),
-            backgroundColor: ['#e74c3c', '#e67e22', '#f1c40f', '#2ecc71', '#1abc9c']
-          }]
-        },
-        options: {
-        responsive: true,
-        maintainAspectRatio: false, // 💡 부모 wrapper 크기(200px)에 맞추도록 설정
-        plugins: {
-        legend: {
-        position: 'right', // 범례 우측 배치
-        labels: {
-          boxWidth: 12,    // 범례 색상 상자 크기 축소
-          font: { size: 11 } // 범례 폰트 크기 축소
-            }
-        }
-        }
-        }
-      });
+  if (!shareToken) {
+    alert('잘못된 접근입니다. 처음부터 다시 진행해 주세요.');
+    window.location.href = 'q1.html';
+    return;
+  }
 
-      // C. [하단] 카드 5개 동적 삽입
-      const container = document.getElementById('stock-list-container');
-      container.innerHTML = data.stocks.map(stock => `
-        <div class="stock-card">
-          <h3>${stock.name} | ${stock.code}</h3>
-          <p>배정 금액: ${stock.amount.toLocaleString()}원 (${stock.sharePercent}%)</p>
-          <p>종합 점수 뱃지: ${stock.score}점</p>
-          <br>
-          <p><strong>핵심 가치 지표</strong><br>
-          EV/EBITDA ${stock.evEbitda}배<br>
-          ROE ${stock.roe}%<br>
-          DCF 상승여력: +${stock.dcfUpside}%</p>
-          <br>
-          <p><strong>AI 한 줄 요약</strong><br>
-          ${stock.aiSummary}</p>
-        </div>
-      `).join('');
-    }
-    
-    // 백엔드 fetch 연동
-    // GET 예시: 추천 기업 정보 또는 결과 조회
-fetch('https://api.financial-ai.p-e.kr/portfolios/${shareToken}')
-  .then(response => response.json())
-  .then(data => {
-    console.log(data); // 백엔드에서 받아온 데이터 확인
-    
-    // 새로 추가되었다는 allocationRation(퍼센트) 사용 예시
-    console.log(data.allocationRation); 
-    
-    // 받아온 data를 화면(HTML)에 그려주는 코드 작성
+  // C. 모달(더보기) 클릭 이벤트 제어 등록
+  initModalEvents();
+
+  // D. 백엔드로 GET 요청 보내기
+  fetch(`https://api.financial-ai.p-e.kr/portfolios/${shareToken}`, {
+    method: 'GET',
+    headers: { 'Content-Type': 'application/json' }
   })
-  .catch(error => console.error('에러 발생:', error));
+    .then(res => {
+      if (!res.ok) throw new Error('포트폴리오 정보를 불러올 수 없습니다.');
+      return res.json();
+    })
+    .then(data => {
+      console.log('백엔드 응답 데이터:', data);
+      
+      // E. 받아온 데이터로 화면 전체 렌더링
+      renderDashboard(data);
+    })
+    .catch(error => {
+      console.error('GET 에러 발생:', error);
+      alert('데이터를 불러오는데 실패했습니다.');
+    });
+});
 
+// ==========================================
+// 2. 화면 전체 렌더링 메인 함수
+// ==========================================
+function renderDashboard(data) {
+  // A. 상단 요약 데이터 바인딩
+  const totalAmountEl = document.getElementById('total-amount');
+  const dividendYieldEl = document.getElementById('dividend-yield');
+  const dcfUpsideEl = document.getElementById('dcf-upside');
 
-// 1. 와이어프레임 텍스트 내용을 그대로 담은 가짜 데이터 객체 생성
-const mockDashboardData = {
-  summary: {
-    totalAmount: 10000000,
-    dividendYield: 3.85,
-    dcfUpside: 3.0
-  },
-  stocks: [
-    // 5개 종목 데이터를 배열 안에 객체 형태로 작성
-    {
-      name: "삼성전자",
-      code: "005930",
-      amount: 3000000,
-      sharePercent: 30, // 차트에 쓰일 비중 (%)
-      score: 95,
-      evEbitda: 5.2,
-      roe: 12.4,
-      dcfUpside: 18,
-      aiSummary: "3년 연속 안정적 FCF 창출 및 사업보고서 상 신규 공장 증설로 장기 성장 가능성 높음"
-    },
-    {
-      name: "A기업", // 와이어프레임 예시 텍스트
-      code: "A00000",
-      amount: 2500000,
-      sharePercent: 25,
-      score: 95,
-      evEbitda: 5.2,
-      roe: 12.4,
-      dcfUpside: 18,
-      aiSummary: "A기업에 대한 AI 한 줄 요약 텍스트가 들어갑니다. (와이어프레임 내용과 동일)"
-    },
-    {
-      name: "B기업",
-      code: "B00000",
-      amount: 2000000,
-      sharePercent: 20,
-      score: 95,
-      evEbitda: 5.2,
-      roe: 12.4,
-      dcfUpside: 18,
-      aiSummary: "B기업에 대한 AI 한 줄 요약 텍스트가 들어갑니다."
-    },
-    {
-      name: "C기업",
-      code: "C00000",
-      amount: 1500000,
-      sharePercent: 15,
-      score: 95,
-      evEbitda: 5.2,
-      roe: 12.4,
-      dcfUpside: 18,
-      aiSummary: "C기업에 대한 AI 한 줄 요약 텍스트가 들어갑니다."
-    },
-    {
-      name: "D기업",
-      code: "D00000",
-      amount: 1000000,
-      sharePercent: 10,
-      score: 95,
-      evEbitda: 5.2,
-      roe: 12.4,
-      dcfUpside: 18,
-      aiSummary: "D기업에 대한 AI 한 줄 요약 텍스트가 들어갑니다."
-    }
-  ]
-};
+  if (totalAmountEl && data.totalInvestment !== undefined) {
+    totalAmountEl.textContent = `${Number(data.totalInvestment).toLocaleString('ko-KR')}원`;
+  }
+  if (dividendYieldEl && data.averageDividendYield !== undefined) {
+    dividendYieldEl.textContent = `${data.averageDividendYield}%`;
+  }
+  if (dcfUpsideEl && data.averageDcfUpside !== undefined) {
+    dcfUpsideEl.textContent = `${data.averageDcfUpside}%`;
+  }
 
-// 2. 가짜 데이터를 화면 그리기 함수(renderRedstockDashboard)에 강제로 주입!
-// 이렇게 하면 백엔드 없이도 즉시 화면이 텍스트로 채워집니다.
-renderRedstockDashboard(mockDashboardData);
-
-//더보기 팝업
-
-// 백엔드에서 받아올 데이터 예시 (테스트용 가짜 데이터)
-const mockDetailData = {
-  dcfSummary: "기업별 3개년 FCF(순현금흐름) 추정 및 영구가치 산출을 통한 목표주가 괴리율 분석",
-  marketCapInfo: "KOSPI/KOSDAQ 시가총액 상위 종목 기준 최근 4분기 PER, PBR 반영 완료",
-  portfolioProcess: "가치지표(EV/EBITDA, ROE, DCF)와 배당수익률을 종합 점수화(100점 만점)하여 가중치 배분"
-};
-
-// 모달 조작 및 데이터 렌더링 함수
-function setupDetailModal(detailData) {
-  const modal = document.getElementById('detail-modal');
-  const moreBtn = document.getElementById('more-detail-btn');
-  const closeBtn = document.getElementById('modal-close-btn');
+  // B. 모달(더보기) 내용 채우기 (3가지 AI 분석 리포트)
   const modalBody = document.getElementById('modal-body-content');
+  if (modalBody) {
+    modalBody.innerHTML = `
+      <h3>포트폴리오 상세 분석</h3>
+      <div style="margin-top: 15px; line-height: 1.6;">
+        <h4 style="color: #4E73DF; margin-bottom: 5px;">1. 가치평가 분석 (DCF / EV-EBITDA)</h4>
+        <p style="color: #555; font-size: 14px;">${data.valuationAnalysis || '내용 없음'}</p>
+        
+        <h4 style="color: #4E73DF; margin-top: 15px; margin-bottom: 5px;">2. 시장 지표 분석</h4>
+        <p style="color: #555; font-size: 14px;">${data.marketIndicatorAnalysis || '내용 없음'}</p>
+        
+        <h4 style="color: #4E73DF; margin-top: 15px; margin-bottom: 5px;">3. 포트폴리오 비중 산출 분석</h4>
+        <p style="color: #555; font-size: 14px;">${data.allocationAnalysis || '내용 없음'}</p>
+      </div>
+    `;
+  }
 
-  // 1. 백엔드 데이터를 와이어프레임 양식에 맞춰 HTML로 구성
-  modalBody.innerHTML = `
-    <div class="modal-body">
-      <ol>
-        <li>
-          <strong>기업 별 DCF, EV-EBIT 산출과정 요약</strong>
-          <p class="detail-sub-text">${detailData.dcfSummary || '상세 데이터 준비 중'}</p>
-        </li>
-        <li>
-          <strong>시가총액, PER, PBR 기본정보</strong>
-          <p class="detail-sub-text">${detailData.marketCapInfo || '상세 데이터 준비 중'}</p>
-        </li>
-        <li>
-          <strong>기업 포트폴리오 비율 산출 과정 (점수화 과정) 설명</strong>
-          <p class="detail-sub-text">${detailData.portfolioProcess || '상세 데이터 준비 중'}</p>
-        </li>
-      </ol>
-    </div>
-  `;
+  // C. Top 5 추천 종목 차트 & 하단 카드 렌더링
+  if (data.companies && data.companies.length > 0) {
+    renderTop5Chart(data.companies.slice(0, 5));
+    renderStockCards(data.companies);
+  }
+}
 
-  // 2. 더보기 버튼 클릭 시 모달 열기
-  moreBtn.addEventListener('click', () => {
-    modal.style.display = 'flex';
-  });
+// ==========================================
+// 3. 차트 렌더링 (Chart.js / 중복 방지 포함)
+// ==========================================
+function renderTop5Chart(companies) {
+  const canvas = document.getElementById('top5Chart');
+  if (!canvas) return;
 
-  // 3. X 버튼 클릭 시 모달 닫기
-  closeBtn.addEventListener('click', () => {
-    modal.style.display = 'none';
-  });
+  const ctx = canvas.getContext('2d');
+  
+  // 기존 차트가 있으면 삭제 후 새로 생성
+  if (top5ChartInstance) { 
+    top5ChartInstance.destroy(); 
+  }
 
-  // 4. 모달 검은색 바깥 배경 클릭 시 닫기
-  window.addEventListener('click', (event) => {
-    if (event.target === modal) {
-      modal.style.display = 'none';
+  const labels = companies.map(c => c.companyName);
+  const weights = companies.map(c => c.allocationRatio);
+
+  top5ChartInstance = new Chart(ctx, {
+    type: 'doughnut',
+    data: {
+      labels: labels,
+      datasets: [{
+        label: '배정 비율 (%)',
+        data: weights,
+        backgroundColor: ['#4E73DF', '#1CC88A', '#36B9CC', '#F6C23E', '#E74A3B'],
+        borderWidth: 1
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: {
+        legend: { position: 'bottom' }
+      }
     }
   });
 }
 
-// 💡 페이지 로드 후 실행
-window.addEventListener('DOMContentLoaded', () => {
-  // 백엔드 연결 후에는 localStorage에서 백엔드 데이터를 꺼내와서 전달하면 됩니다.
-  const resultData = JSON.parse(localStorage.getItem('portfolioResult'));
-  
-  // 백엔드 데이터에 상세 정보(details)가 들어있다면 그걸 사용하고, 없으면 mockDetailData 사용
-  const detailData = (resultData && resultData.details) ? resultData.details : mockDetailData;
-  
-  setupDetailModal(detailData);
-});
+// ==========================================
+// 4. 하단 종목 카드리스트 렌더링
+// ==========================================
+function renderStockCards(companies) {
+  const container = document.getElementById('stock-list-container');
+  if (!container || !companies) return;
 
-    // 헤더
-    fetch('header.html')
-      .then(response => response.text())
-      .then(data => {
-        document.getElementById('header-container').innerHTML = data;
-      })
-      .catch(error => console.error('헤더를 불러오는 중 에러 발생:', error));
+  container.innerHTML = ''; // 초기화
+
+  companies.forEach(company => {
+    const card = document.createElement('div');
+    card.className = 'stock-card';
+    card.innerHTML = `
+      <div class="stock-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+        <h4 style="margin: 0; font-size: 16px;">
+          <span style="color: #888; font-size: 13px; margin-right: 4px;">#${company.rankNo}</span>
+          ${company.companyName} 
+          <small style="color: #888;">(${company.corpCode})</small>
+        </h4>
+        <span class="badge" style="background: #eef2ff; color: #4f46e5; padding: 2px 8px; border-radius: 4px; font-weight: bold;">
+          ${company.allocationRatio}%
+        </span>
+      </div>
+      <div class="stock-body" style="font-size: 14px; color: #555;">
+        <p style="margin: 4px 0;">배정 금액: <strong>${Number(company.allocatedAmount || 0).toLocaleString('ko-KR')}원</strong></p>
+        <p style="margin: 4px 0; font-size: 13px; color: #666;">
+          종합 점수: <strong>${company.finalScore}점</strong> | DCF: ${company.dcf}% | ROE: ${company.roe}% | EV/EBITDA: ${company.evEbitda}
+        </p>
+        ${company.investmentReason ? `<p style="margin-top: 8px; color: #2563eb; font-size: 13px; background: #f0f7ff; padding: 6px 10px; border-radius: 4px;">💡 ${company.investmentReason}</p>` : ''}
+      </div>
+    `;
+    container.appendChild(card);
+  });
+}
+
+// ==========================================
+// 5. 모달(더보기) 팝업 제어
+// ==========================================
+function initModalEvents() {
+  const moreBtn = document.getElementById('more-detail-btn');
+  const modal = document.getElementById('detail-modal');
+  const closeBtn = document.getElementById('modal-close-btn');
+
+  if (moreBtn && modal) {
+    moreBtn.addEventListener('click', () => {
+      modal.style.display = 'flex';
+    });
+  }
+
+  if (closeBtn && modal) {
+    closeBtn.addEventListener('click', () => {
+      modal.style.display = 'none';
+    });
+  }
+
+  if (modal) {
+    window.addEventListener('click', (e) => {
+      if (e.target === modal) {
+        modal.style.display = 'none';
+      }
+    });
+  }
+}
+
   </script>
 
 </body>
