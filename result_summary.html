@@ -373,23 +373,28 @@ function renderStockCards(companies) {
     const card = document.createElement('div');
     card.className = 'stock-card';
     card.innerHTML = `
-      <div class="stock-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
-        <h4 style="margin: 0; font-size: 16px;">
-          <span style="color: #888; font-size: 13px; margin-right: 4px;">#${company.rankNo}</span>
-          ${company.companyName} 
-          <small style="color: #888;">(${company.corpCode})</small>
-        </h4>
-        <span class="badge" style="background: #eef2ff; color: #4f46e5; padding: 2px 8px; border-radius: 4px; font-weight: bold;">
+      <div class="stock-header" style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 12px;">
+        
+        <div style="display: flex; flex-direction: column; gap: 4px; padding-right: 8px;">
+          <h4 style="margin: 0; font-size: 16px; line-height: 1.2; word-break: keep-all;">
+            <span style="color: #888; font-size: 13px; margin-right: 4px;">#${company.rankNo}</span>
+            ${company.companyName}
+          </h4>
+          <span style="color: #888; font-size: 12px;">(${company.corpCode})</span>
+        </div>
+
+        <span class="badge" style="background: #eef2ff; color: #4f46e5; padding: 4px 8px; border-radius: 4px; font-weight: bold; font-size: 13px; white-space: nowrap; flex-shrink: 0;">
           ${company.allocationRatio}%
         </span>
+        
       </div>
+      
       <div class="stock-body" style="font-size: 14px; color: #555;">
         <p style="margin: 4px 0;">배정 금액: <strong>${Number(company.allocatedAmount || 0).toLocaleString('ko-KR')}원</strong></p>
-        <p style="margin: 4px 0; font-size: 13px; color: #666;">
-          <!-- EV/EBITDA를 PER로 교체 완료 -->
+        <p style="margin: 4px 0; font-size: 13px; color: #666; line-height: 1.4;">
           종합 점수: <strong>${company.finalScore}점</strong> | DCF: ${company.dcf}% | ROE: ${company.roe}% | PER: ${company.per || 'N/A'}배
         </p>
-        ${company.investmentReason ? `<p style="margin-top: 8px; color: #2563eb; font-size: 13px; background: #f0f7ff; padding: 6px 10px; border-radius: 4px;">💡 ${company.investmentReason}</p>` : ''}
+        ${company.investmentReason ? `<p style="margin-top: 8px; color: #2563eb; font-size: 13px; background: #f0f7ff; padding: 6px 10px; border-radius: 4px; line-height: 1.4;">💡 ${company.investmentReason}</p>` : ''}
       </div>
     `;
     container.appendChild(card);
