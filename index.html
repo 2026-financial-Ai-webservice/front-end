@@ -2,91 +2,116 @@
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
-    <title>RedstocK</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Redstock - Main</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Joan&display=swap" rel="stylesheet">
+    
     <style>
-        /* 전체 페이지 리셋 및 배경 설정 */
-        body {
+        * {
             margin: 0;
             padding: 0;
-            width: 100vw;
-            height: 100vh;
-            background-color: #ffffff; /* 배경 흰색 */
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            overflow: hidden;
-            position: relative;
-        }
-
-        /* 왼쪽 맨 끝에 붙는 세로 빨간 선 */
-        .edge-red-line {
-            position: absolute;
-            top: 0;
-            left: 0; /* 화면 가장 왼쪽 끝에 밀착 */
-            width: 8px; /* 선 두께 (원하시는 두께로 조절 가능) */
-            height: 100%;
-            background-color: #d33838; /* 빨간색 포인트 */
-        }
-
-        /* 전체를 감싸는 베이지색 테두리 박스 (오른쪽/위/아래 대칭 맞춤) */
-        .frame-container {
-            position: absolute;
-            top: 20px;
-            left: 30px; /* 왼쪽 빨간 선과의 간격 고려 */
-            right: 20px;
-            bottom: 20px;
-            border: 4px solid #e2dec7; /* 베이지색 테두리 */
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
             box-sizing: border-box;
         }
 
-        /* RedstocK 타이틀 박스 */
+        body {
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #FFFFFF; 
+            font-family: 'Pretendard', sans-serif;
+            overflow: hidden;
+        }
+
+        .main-container {
+            position: relative;
+            width: 100vw; 
+            height: 100vh; 
+            border: 24px solid #E9E7A2; 
+            display: flex;
+            flex-direction: column;
+            align-items: center; 
+        }
+
+        .main-container::before {
+            content: "";
+            position: absolute;
+            left: -24px; /* 기존 0에서 -24px로 수정하여 오른쪽과 대칭을 맞춤 */
+            top: -24px;
+            bottom: -24px;
+            width: 8px;
+            background-color: #D53B3B;
+            z-index: 2;
+        }
+
+        .main-container::after {
+            content: "";
+            position: absolute;
+            right: -24px;
+            top: -24px;
+            bottom: -24px;
+            width: 8px;
+            background-color: #D53B3B;
+            z-index: 2;
+        }
+
         .title-box {
-            background-color: #e2dec7;
-            padding: 20px 60px;
-            margin-bottom: 50px;
+            width: 78vw; /* 가로폭 유지 */
+            height: 440px; /* 세로 높이를 시원하게 확장 */
+            background-color: #E9E7A2;
+            display: flex;
+            justify-content: center;
+            align-items: center; /* 상하 완벽한 중앙 정렬을 자동으로 유지 */
+            border-radius: 4px;
+            z-index: 1;
+            margin-top: 18vh; /* 박스를 기존보다 더 아래로 끌어내림 */
         }
 
-        .title-text {
-            font-family: serif;
-            font-size: 64px;
-            font-weight: bold;
+        .title-box h1 {
+            font-family: 'Joan', serif;
+            font-size: 270px; /* 폰트 사이즈를 박스에 맞춰 살짝 키움 */
+            font-weight: 400; 
             color: #000000;
-            letter-spacing: 2px;
-            margin: 0;
+            line-height: 1;
+            white-space: nowrap;
+            letter-spacing: -4px; 
         }
 
-        /* START 버튼 */
-        .start-button {
-            background-color: #d33838;
-            color: #ffffff;
-            font-family: serif;
-            font-size: 20px;
-            padding: 12px 40px;
+        .start-btn {
+            background-color: #D53B3B;
+            color: #FFFFFF;
+            font-family: 'Joan', serif;
+            font-size: 26px; 
+            font-weight: 400;
+            padding: 22px 90px; 
             border: none;
+            border-radius: 4px;
             cursor: pointer;
-            letter-spacing: 1px;
+            text-decoration: none;
+            letter-spacing: 2px;
+            transition: background-color 0.2s ease, transform 0.1s ease;
+            z-index: 1;
+            position: absolute;
+            bottom: 10vh; 
         }
 
-        .start-button:hover {
-            opacity: 0.9;
+        .start-btn:hover {
+            background-color: #BE3232;
+            transform: translateY(-2px);
         }
     </style>
 </head>
 <body>
 
-    <!-- 화면 맨 좌측 끝에 위치하는 세로 빨간 선 -->
-    <div class="edge-red-line"></div>
-
-    <!-- 나머지 타이틀과 버튼을 감싸는 프레임 -->
-    <div class="frame-container">
+    <div class="main-container">
         <div class="title-box">
-            <h1 class="title-text">RedstocK</h1>
+            <h1>RedstocK</h1>
         </div>
-        <button class="start-button">START</button>
+        <a href="question.html" class="start-btn">START</a>
     </div>
 
 </body>
