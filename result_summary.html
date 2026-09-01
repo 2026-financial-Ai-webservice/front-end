@@ -11,20 +11,20 @@
       font-family: 'Pretendard', sans-serif;
     }
 
-    /* 상단 배너(헤더) 스타일: 밑줄 제거(text-decoration: none) 추가 */
+    /* 상단 배너(헤더) 스타일: 아래 박스들과 왼쪽 정렬(24px)을 맞추고 밑줄 제거 */
     #header-container {
       width: 100%;
     }
     .header, #header-container div, .header a, #header-container a {
       background-color: #D53B3B !important;
       color: #FFFFFF !important;
-      padding: 25px 40px !important;
+      padding: 25px 24px !important; /* 좌우 패딩을 24px로 맞춰 아래 박스와 라인 일치 */
       font-family: 'Joan', serif !important;
       font-size: 36px !important;
       letter-spacing: 1px !important;
       width: 100% !important;
       box-sizing: border-box !important;
-      text-decoration: none !important; /* 링크 밑줄 강제 제거 */
+      text-decoration: none !important; 
       border-bottom: none !important;
     }
 
