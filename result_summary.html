@@ -107,7 +107,7 @@
       position: relative;
     }
 
-    /* 하단 영역: 5열 그리드 및 카드 높이 대폭 확장 */
+    /* 하단 영역: 5열 그리드 및 카드 정렬 조정 (글씨를 위로 올리고 크기 키움) */
     .bottom-section {
       display: grid;
       grid-template-columns: repeat(5, 1fr);
@@ -118,14 +118,15 @@
     .stock-card {
       background-color: #e9e7a2;
       padding: 28px;
-      min-height: 380px; /* 박스 크기를 더 길쭉하게 키움 */
+      min-height: 380px; 
       border-radius: 8px;
-      font-size: 14px;
+      font-size: 15px; /* 글씨 크기를 기존 14px에서 살짝 키움 */
       line-height: 1.6;
       box-sizing: border-box;
       display: flex;
       flex-direction: column;
-      justify-content: space-between;
+      justify-content: flex-start; /* content를 위쪽으로 모아줌 */
+      gap: 14px; /* 요소들 사이의 간격 부여 */
     }
     .stock-card h3 {
       font-size: 16px;
@@ -397,26 +398,26 @@
         const card = document.createElement('div');
         card.className = 'stock-card';
         card.innerHTML = `
-          <div class="stock-header" style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 12px;">
+          <div class="stock-header" style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 6px;">
             <div style="display: flex; flex-direction: column; gap: 4px; padding-right: 8px;">
-              <h4 style="margin: 0; font-size: 16px; line-height: 1.2; word-break: keep-all;">
-                <span style="color: #888; font-size: 13px; margin-right: 4px;">#${company.rankNo}</span>
+              <h4 style="margin: 0; font-size: 17px; line-height: 1.2; word-break: keep-all;">
+                <span style="color: #777; font-size: 14px; margin-right: 4px;">#${company.rankNo}</span>
                 ${company.companyName}
               </h4>
-              <span style="color: #888; font-size: 12px;">(${company.corpCode})</span>
+              <span style="color: #777; font-size: 13px;">(${company.corpCode})</span>
             </div>
 
-            <span class="badge" style="background: #eef2ff; color: #4f46e5; padding: 4px 8px; border-radius: 4px; font-weight: bold; font-size: 13px; white-space: nowrap; flex-shrink: 0;">
+            <span class="badge" style="background: #eef2ff; color: #4f46e5; padding: 5px 9px; border-radius: 4px; font-weight: bold; font-size: 14px; white-space: nowrap; flex-shrink: 0;">
               ${company.allocationRatio}%
             </span>
           </div>
           
-          <div class="stock-body" style="font-size: 14px; color: #555;">
-            <p style="margin: 4px 0;">배정 금액: <strong>${Number(company.allocatedAmount || 0).toLocaleString('ko-KR')}원</strong></p>
-            <p style="margin: 4px 0; font-size: 13px; color: #666; line-height: 1.4;">
+          <div class="stock-body" style="font-size: 14.5px; color: #444; display: flex; flex-direction: column; gap: 6px;">
+            <p style="margin: 0;">배정 금액: <strong>${Number(company.allocatedAmount || 0).toLocaleString('ko-KR')}원</strong></p>
+            <p style="margin: 0; font-size: 13.5px; color: #555; line-height: 1.4;">
               종합 점수: <strong>${company.finalScore}점</strong> | DCF: ${company.dcf}% | ROE: ${company.roe}% | PER: ${company.per || 'N/A'}배
             </p>
-            ${company.investmentReason ? `<p style="margin-top: 8px; color: #2563eb; font-size: 13px; background: #f0f7ff; padding: 6px 10px; border-radius: 4px; line-height: 1.4;">💡 ${company.investmentReason}</p>` : ''}
+            ${company.investmentReason ? `<p style="margin-top: 4px; color: #2563eb; font-size: 13.5px; background: #f0f7ff; padding: 8px 10px; border-radius: 4px; line-height: 1.4;">💡 ${company.investmentReason}</p>` : ''}
           </div>
         `;
         container.appendChild(card);
