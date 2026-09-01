@@ -299,7 +299,7 @@ function renderDashboard(data) {
     modalBody.innerHTML = `
       <h3>포트폴리오 상세 분석</h3>
       <div style="margin-top: 15px; line-height: 1.6;">
-        <h4 style="color: #4E73DF; margin-bottom: 5px;">1. 가치평가 분석 (DCF / EV-EBITDA)</h4>
+        <h4 style="color: #4E73DF; margin-bottom: 5px;">1. 가치평가 분석 (DCF / PER)</h4>
         <p style="color: #555; font-size: 14px;">${data.valuationAnalysis || '내용 없음'}</p>
         
         <h4 style="color: #4E73DF; margin-top: 15px; margin-bottom: 5px;">2. 시장 지표 분석</h4>
@@ -313,8 +313,12 @@ function renderDashboard(data) {
 
   // C. Top 5 추천 종목 차트 & 하단 카드 렌더링
   if (data.companies && data.companies.length > 0) {
-    renderTop5Chart(data.companies.slice(0, 5));
-    renderStockCards(data.companies);
+    // 백엔드에서 몇 개가 오든 여기서 깔끔하게 5개로 자릅니다.
+    const top5Companies = data.companies.slice(0, 5); 
+    
+    // 차트와 카드 모두 동일하게 5개짜리 배열(top5Companies)을 넘겨줍니다.
+    renderTop5Chart(top5Companies);
+    renderStockCards(top5Companies);
   }
 }
 
@@ -382,7 +386,8 @@ function renderStockCards(companies) {
       <div class="stock-body" style="font-size: 14px; color: #555;">
         <p style="margin: 4px 0;">배정 금액: <strong>${Number(company.allocatedAmount || 0).toLocaleString('ko-KR')}원</strong></p>
         <p style="margin: 4px 0; font-size: 13px; color: #666;">
-          종합 점수: <strong>${company.finalScore}점</strong> | DCF: ${company.dcf}% | ROE: ${company.roe}% | EV/EBITDA: ${company.evEbitda}
+          <!-- EV/EBITDA를 PER로 교체 완료 -->
+          종합 점수: <strong>${company.finalScore}점</strong> | DCF: ${company.dcf}% | ROE: ${company.roe}% | PER: ${company.per || 'N/A'}배
         </p>
         ${company.investmentReason ? `<p style="margin-top: 8px; color: #2563eb; font-size: 13px; background: #f0f7ff; padding: 6px 10px; border-radius: 4px;">💡 ${company.investmentReason}</p>` : ''}
       </div>
@@ -390,7 +395,6 @@ function renderStockCards(companies) {
     container.appendChild(card);
   });
 }
-
 // ==========================================
 // 5. 모달(더보기) 팝업 제어
 // ==========================================
