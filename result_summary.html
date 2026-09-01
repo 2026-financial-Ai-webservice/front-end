@@ -3,40 +3,41 @@
 <head>
   <meta charset="UTF-8">
   <title>RedstocK Dashboard</title>
-  <!-- 헤더가 들어갈 빈 위치 -->
-  <div id="header-container"></div>
   <style>
-    body {
+    /* [수정] 브라우저 기본 여백 제거 및 전체 너비 확보 */
+    html, body {
+      width: 100%;
+      height: 100%;
       margin: 0;
       padding: 0;
       background-color: #ffffff; 
     }
 
-    /* [수정된 부분 1] 상단 헤더가 외부에서 불려올 때 무조건 두껍게 고정되도록 강제 적용 */
+    /* 상단 헤더 스타일 강제 고정 */
     #header-container {
       width: 100%;
     }
     .header {
       background-color: #D53B3B !important;
       color: #FFFFFF !important;
-      padding: 30px 40px !important; /* 배너 두께를 넉넉하게 고정 */
+      padding: 30px 40px !important;
       font-family: 'Joan', serif !important;
-      font-size: 40px !important; /* 글씨 크기 확대 */
+      font-size: 40px !important;
       letter-spacing: 1px !important;
       width: 100% !important;
       box-sizing: border-box !important;
     }
 
-    /* [수정된 부분 2] 대시보드 전체 컨테이너 폭 제한 해제 (1400px 제한 삭제) */
+    /* [수정] 대시보드 전체 컨테이너 폭 제한 전면 해제 (화면 양 끝까지 꽉 채우기) */
     .dashboard-container {
-      width: 100%; 
-      max-width: 100%; 
+      width: 100% !important; 
+      max-width: 100% !important; 
       box-sizing: border-box;
       margin: 0 auto;          
       padding: 24px;   
     }
 
-    /* 상단 영역:포트폴리오 요약 + Top 5 차트 */
+    /* 상단 영역: 포트폴리오 요약 + Top 5 차트 */
     .top-section {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -198,59 +199,44 @@
       font-weight: normal;
     }
   </style>
-</head>
-<body>
-    <!-- 이후 HTML 바디 구조는 동일하게 작성하시면 됩니다 -->
-</body>
-</html>
-</head>
-<body>
-    <!-- 이후 HTML 바디 구조는 동일하게 작성하시면 됩니다 -->
-</body>
-</html>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
 
-<div class="dashboard-container">
-  <!-- 상단 요약 영역 -->
-  <div class="top-section">
-    <!-- 1. 포트폴리오 요약 -->
-    <div class="summary-box">
-      <h2>포트폴리오 요약 <button id="more-detail-btn" style="font-size: 12px;">+ 더보기</button></h2>
-      <p>총 투자금: <strong id="total-amount">0원</strong></p>
-      <p>예상 평균 시가배당률: <strong id="dividend-yield">0%</strong></p>
-      <p>DCF 평균 상승여력: <strong id="dcf-upside">0%</strong></p>
-    </div>
+  <div id="header-container"></div>
 
-    <!-- [더보기] 더보기 클릭 시 떠올라올 상세 모달 (팝업) -->
-    <div id="detail-modal" class="modal-overlay" style="display: none;">
-    <div class="modal-content">
-    <!-- 닫기 버튼 -->
-    <button id="modal-close-btn" class="modal-close-btn">&times;</button>
-    
-    <!-- 모달 내부 상세 컨텐츠 영역 -->
-    <div id="modal-body-content">
-      <!-- 동적으로 데이터가 들어갈 자리 -->
-    </div>
-  </div>
-</div>
+  <div class="dashboard-container">
+    <div class="top-section">
+      <div class="summary-box">
+        <h2>포트폴리오 요약 <button id="more-detail-btn" style="font-size: 12px; cursor: pointer;">+ 더보기</button></h2>
+        <p>총 투자금: <strong id="total-amount">0원</strong></p>
+        <p>예상 평균 시가배당률: <strong id="dividend-yield">0%</strong></p>
+        <p>DCF 평균 상승여력: <strong id="dcf-upside">0%</strong></p>
+      </div>
 
-    <!-- 2. Top 5 추천 종목 차트 -->
-    <div class="chart-box">
-      <div class="chart-wrapper">
-        <h3>Top 5 추천 종목</h3>
-        <div class="canvas-container">
-        <canvas id="top5Chart"></canvas>
+      <div id="detail-modal" class="modal-overlay" style="display: none;">
+        <div class="modal-content">
+          <button id="modal-close-btn" class="modal-close-btn">&times;</button>
+          <div id="modal-body-content">
+            </div>
+        </div>
+      </div>
+
+      <div class="chart-box">
+        <div class="chart-wrapper">
+          <h3>Top 5 추천 종목</h3>
+          <div class="canvas-container">
+            <canvas id="top5Chart"></canvas>
+          </div>
         </div>
       </div>
     </div>
+
+    <div id="stock-list-container" class="bottom-section"></div>
   </div>
 
-  <!-- 3. 하단 5개 종목 상세 카드 영역 -->
-  <div id="stock-list-container" class="bottom-section"></div>
-</div>
-
+</body>
+</html>
   <script>
 let top5ChartInstance = null;
 
