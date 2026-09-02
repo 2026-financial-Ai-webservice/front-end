@@ -2,8 +2,8 @@
 <html lang="ko">
 <head>
   <meta charset="UTF-8">
-  <!-- 모바일에서도 무조건 가로 1200px 데스크톱 사이즈로 렌더링하도록 강제 설정 -->
-  <meta name="viewport" content="width=1200">
+  <!-- 기기 화면 너비에 맞춰 1:1 비율로 자동 조정하는 핵심 태그 -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>RedstocK Dashboard</title>
   <style>
     body {
@@ -13,10 +13,9 @@
       font-family: 'Pretendard', sans-serif;
     }
 
-    /* 상단 배너(헤더) 스타일: 모바일에서도 줄어들지 않도록 최소 너비(min-width) 1200px 고정 */
+    /* 상단 배너(헤더) 스타일 */
     #header-container {
       width: 100%;
-      min-width: 1200px;
     }
     .header, #header-container div, .header a, #header-container a {
       background-color: #D53B3B !important;
@@ -26,17 +25,15 @@
       font-size: 36px !important;
       letter-spacing: 1px !important;
       width: 100% !important;
-      min-width: 1200px !important;
       box-sizing: border-box !important;
       text-decoration: none !important; 
       border-bottom: none !important;
     }
 
-    /* 대시보드 전체 컨테이너: 최소 너비 1200px을 부여해 요소들이 찌그러지지 않게 방어 */
+    /* 대시보드 전체 컨테이너 */
     .dashboard-container {
       width: 100%;       
-      max-width: none;   
-      min-width: 1200px;
+      max-width: 1400px; /* PC에서는 최대 1400px까지만 늘어나고 가운데 정렬 */
       margin: 0 auto;           
       padding: 24px;   
       box-sizing: border-box;
@@ -114,7 +111,7 @@
       position: relative;
     }
 
-    /* 하단 영역: 기본 5열 그리드 무조건 유지 */
+    /* 하단 영역: 기본 PC 화면에서는 5열 유지 */
     .bottom-section {
       display: grid;
       grid-template-columns: repeat(5, 1fr);
@@ -141,6 +138,47 @@
       border-bottom: 1px solid #dcd991;
       padding-bottom: 8px;
     }
+
+    /* =================================================== */
+    /* 📱 반응형(Responsive) 미디어 쿼리: 기기 크기에 맞춰 자동 재배치 */
+    /* =================================================== */
+    
+    /* 태블릿 크기 (화면 폭 1024px 이하) */
+    @media screen and (max-width: 1024px) {
+      .bottom-section {
+        grid-template-columns: repeat(3, 1fr); /* 5열 -> 3열로 줄바꿈 */
+      }
+    }
+
+    /* 모바일 크기 (화면 폭 768px 이하) */
+    @media screen and (max-width: 768px) {
+      .header, #header-container div, .header a, #header-container a {
+        font-size: 28px !important; /* 모바일에서는 헤더 폰트 크기 축소 */
+        padding: 20px 20px !important;
+      }
+      .dashboard-container {
+        padding: 16px; /* 모바일 좌우 여백 축소 */
+      }
+      .top-section {
+        grid-template-columns: 1fr; /* 요약 박스와 차트를 위아래 1열로 배치 */
+      }
+      .bottom-section {
+        grid-template-columns: repeat(2, 1fr); /* 종목 카드를 2열로 배치 */
+      }
+      .stock-card {
+        min-height: auto; /* 모바일에서는 카드 높이 고정을 풀고 내용물에 맞춤 */
+        padding: 20px;
+      }
+    }
+
+    /* 작은 스마트폰 크기 (화면 폭 480px 이하) */
+    @media screen and (max-width: 480px) {
+      .bottom-section {
+        grid-template-columns: 1fr; /* 스마트폰에서는 종목 카드를 1열로 쭉 나열 */
+      }
+    }
+
+    /* =================================================== */
 
     /* 모달 레이어 */
     .modal-overlay {
