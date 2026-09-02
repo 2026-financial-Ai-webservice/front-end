@@ -2,7 +2,8 @@
 <html lang="ko">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- 모바일에서도 무조건 가로 1200px 데스크톱 사이즈로 렌더링하도록 강제 설정 -->
+  <meta name="viewport" content="width=1200">
   <title>RedstocK Dashboard</title>
   <style>
     body {
@@ -12,27 +13,30 @@
       font-family: 'Pretendard', sans-serif;
     }
 
-    /* 상단 배너(헤더) 스타일: 주석 해제 및 세로 패딩(40px)을 늘려 배너를 두껍게 고정 */
+    /* 상단 배너(헤더) 스타일: 모바일에서도 줄어들지 않도록 최소 너비(min-width) 1200px 고정 */
     #header-container {
       width: 100%;
+      min-width: 1200px;
     }
     .header, #header-container div, .header a, #header-container a {
       background-color: #D53B3B !important;
       color: #FFFFFF !important;
-      padding: 40px 24px !important; /* 세로 두께를 기존 25px에서 40px로 대폭 확대 */
+      padding: 25px 24px !important; 
       font-family: 'Joan', serif !important;
       font-size: 36px !important;
       letter-spacing: 1px !important;
       width: 100% !important;
+      min-width: 1200px !important;
       box-sizing: border-box !important;
       text-decoration: none !important; 
       border-bottom: none !important;
     }
 
-    /* 대시보드 전체 컨테이너: 디바이스와 관계없이 비율 유지 */
+    /* 대시보드 전체 컨테이너: 최소 너비 1200px을 부여해 요소들이 찌그러지지 않게 방어 */
     .dashboard-container {
       width: 100%;       
       max-width: none;   
+      min-width: 1200px;
       margin: 0 auto;           
       padding: 24px;   
       box-sizing: border-box;
@@ -110,7 +114,7 @@
       position: relative;
     }
 
-    /* 하단 영역: 5열 그리드 및 카드 정렬 조정 */
+    /* 하단 영역: 기본 5열 그리드 무조건 유지 */
     .bottom-section {
       display: grid;
       grid-template-columns: repeat(5, 1fr);
@@ -136,21 +140,6 @@
       margin-top: 0;
       border-bottom: 1px solid #dcd991;
       padding-bottom: 8px;
-    }
-
-    /* 모바일 및 태블릿 화면 자동 반응형 대응 */
-    @media screen and (max-width: 1200px) {
-      .bottom-section {
-        grid-template-columns: repeat(2, 1fr) !important; 
-      }
-    }
-    @media screen and (max-width: 768px) {
-      .top-section {
-        grid-template-columns: 1fr !important; 
-      }
-      .bottom-section {
-        grid-template-columns: 1fr !important; 
-      }
     }
 
     /* 모달 레이어 */
