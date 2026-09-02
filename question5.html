@@ -225,6 +225,123 @@
             font-size: 1.8vw; 
             color: #555555;
         }
+
+        /* =================================================== */
+        /* 📱 반응형 미디어 쿼리: 스마트폰 및 태블릿 접속 시 자동 발동 */
+        /* =================================================== */
+        @media screen and (max-width: 768px) {
+            body {
+                flex-direction: column; 
+                height: auto;
+                min-height: 100vh;
+                overflow-x: hidden;
+                overflow-y: auto; 
+            }
+
+            .left-panel {
+                width: 100%;
+                height: auto;
+                min-height: 35vh;
+                padding: 40px 20px;
+                justify-content: center;
+            }
+
+            .left-panel h1 {
+                font-size: 40px; 
+                margin-bottom: 20px;
+            }
+
+            .quote-box {
+                width: 90%;
+            }
+
+            .quote-mark {
+                font-size: 40px;
+            }
+
+            .quote-text {
+                font-size: 22px; 
+            }
+
+            .center-panel {
+                width: 100%;
+                height: auto;
+                min-height: 65vh;
+                padding: 40px 0;
+            }
+
+            .right-edge {
+                display: none; 
+            }
+
+            .q-wrapper {
+                width: 90%;
+                gap: 10px;
+            }
+
+            .arrow {
+                font-size: 30px; 
+            }
+
+            .q-box {
+                width: 75vw; 
+                min-height: auto;
+                padding: 30px 20px;
+            }
+
+            .q-header {
+                margin-bottom: 30px;
+            }
+
+            .q-num {
+                font-size: 16px; 
+            }
+
+            .q-title {
+                font-size: 20px; 
+                word-break: keep-all; 
+            }
+
+            /* Q5 전용: 카드 레이아웃 모바일 최적화 (가로 배열 -> 세로 1열 배열로 변경) */
+            .cards-wrapper {
+                flex-direction: column; 
+                gap: 15px; 
+            }
+
+            .valuation-card {
+                padding: 20px; 
+            }
+
+            .card-title-row {
+                margin-bottom: 15px;
+            }
+
+            .custom-checkbox {
+                width: 24px; 
+                height: 24px;
+                margin-right: 12px;
+            }
+
+            .valuation-card-label input[type="radio"]:checked + .valuation-card .card-title-row .custom-checkbox::after {
+                font-size: 18px; 
+            }
+
+            .card-title {
+                font-size: 18px; 
+            }
+
+            .card-desc {
+                font-size: 15px; 
+                line-height: 1.5;
+            }
+
+            .page-indicator {
+                position: static; 
+                margin-top: 30px;
+                font-size: 18px;
+            }
+        }
+        /* =================================================== */
     </style>
 </head>
 <body>
